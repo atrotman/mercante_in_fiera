@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  username  String    @unique
+  games     Game[]    @relation("GamePlayers")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Game {
+  id          String    @id @default(uuid())
+  status      String    @default("waiting") // waiting, active, completed
+  players     User[]    @relation("GamePlayers")
+  entranceFee Float     @default(0)
+  winnerCards Int       @default(5)
+  prizePool   Float     @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Card {
+  id          String    @id @default(uuid())
+  name        String
+  italianName String
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([name, italianName])
+} 
