@@ -1,1 +1,1 @@
-In the process of developing an online version of a traditional Italian game I play with my family every Christmas called "Mercante in Fiera" (Merchant in Fair).
+In the process of developing an online version of a traditional Italian game I play with my family every Christmas called "Mercante in Fiera" (Merchant at the Fair).
