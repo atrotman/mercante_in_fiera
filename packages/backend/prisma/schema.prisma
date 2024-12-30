@@ -10,21 +10,33 @@ generator client {
 
 model User {
   id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  username  String    @unique
+  nickname  String    // Temporary name for the session
   games     Game[]    @relation("GamePlayers")
+  playerCards PlayerCard[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model Game {
   id          String    @id @default(uuid())
-  status      String    @default("waiting") // waiting, active, completed
+  code        String    @unique
+  isPublic    Boolean   @default(false)
+  status      String    @default("waiting") // waiting, dealing, active, completed
   players     User[]    @relation("GamePlayers")
+  playerCards PlayerCard[]
   entranceFee Float     @default(0)
   winnerCards Int       @default(5)
   prizePool   Float     @default(0)
+  maxPlayers  Int       @default(6)
+  
+  // Game state fields
+  deck1       Json?     // First deck (for winner cards and reveals)
+  deck2       Json?     // Second deck (distributed to players)
+  winningCards Json?    // Selected winner cards
+  currentTurn Int       @default(0)
+  revealedCards Json?   // Track which cards have been revealed
+  auctionState Json?    // Track current auction status
+  
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -34,8 +46,22 @@ model Card {
   name        String
   italianName String
   imageUrl    String?
+  playerCards PlayerCard[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   @@unique([name, italianName])
+}
+
+// Add PlayerCard model to track cards held by players
+model PlayerCard {
+  id        String   @id @default(uuid())
+  gameId    String
+  playerId  String
+  cardId    String
+  game      Game     @relation(fields: [gameId], references: [id])
+  player    User     @relation(fields: [playerId], references: [id])
+  card      Card     @relation(fields: [cardId], references: [id])
+
+  @@unique([gameId, cardId])
 } 

@@ -24,9 +24,12 @@ yarn-error.log*
 
 # IDE
 .idea
-.vscode
+.vscode 
 
 # Replit
 .replit
 replit.nix
 terminal
+
+# To-do
+to-do
