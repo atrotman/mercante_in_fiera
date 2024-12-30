@@ -1,10 +1,12 @@
-Introduction (New Section)
+# Introduction
+
 This document describes a plan to create a multiplayer, online version of the traditional Italian card game Mercante in Fiera. The goal is to provide an engaging, real-time experience where users can buy, sell, and trade cards, participate in auctions, and vie for top prizes—all while enjoying seamless gameplay and global connectivity.
 
-Rules of the Game
+# Rules of the Game
+
 Mercante in Fiera is traditionally played with two decks of 40 cards each (Italian suits: Coins, Cups, Swords, Clubs). One deck is distributed or sold to players (face down, so it’s all a mystery), and the other deck is used to reveal “losing” cards one by one. Cards from the first deck that match the revealed “losers” from the second deck are eliminated from winning contention. Usually, there are a few “winning cards” left that split the prize pot according to agreed-upon percentages.
 
-Key points:
+# Key points:
 
 Players & Merchant
 
@@ -38,17 +40,21 @@ Inbetween these turns, players can still trade cards or buy them from one anothe
 
 The game ends after the merchant has flipped over 1st place card and the money is given to whoever had the matching card
 
-Variations
+# Variations
 
 Trades among players, optional auctions, multiple or custom winning conditions, and side bets are common house-rule variations.
-Roadmap
-Phase 1: Planning and Requirements
-Objectives
+
+# Roadmap
+
+## Phase 1: Planning and Requirements
+
+### Objectives
 
 Create an online multiplayer version of Mercante in Fiera accessible globally.
 Implement real-time features: card trading, auctions, reveals, etc.
 Ensure a user-friendly interface and a scalable backend.
-Key Features
+
+### Key Features
 
 Game Setup: Two 40-card decks, configurable entrance fee, custom winning conditions.
 Gameplay: Card distribution, auctions for leftover cards, turn-based reveals.
@@ -99,55 +105,70 @@ Cards: The two decks are identical but the back of the two decks are different c
     The Rainbow – L’Arcobaleno
     The Goblet – Il Calice
 
-Phase 2: Technical Design
-Backend Architecture
+## Phase 2: Technical Design
+
+### Backend Architecture
 
 Node.js + Express with Socket.IO for real-time interactions.
 PostgreSQL (or MongoDB) for storing game states.
 AWS/Azure for cloud hosting.
-Frontend Architecture
+
+### Frontend Architecture
 
 React.js for a dynamic, interactive UI.
 WebSockets (via Socket.IO) for instant updates.
 Responsive Design with Tailwind CSS or Bootstrap.
-Game Logic
+
+### Game Logic
 
 Algorithms for shuffling, distribution, bidding logic, and final prize calculation.
 Turn-by-turn elimination of cards, real-time auction, and trading.
-Phase 3: Development
-Milestones
+
+## Phase 3: Development
+
+### Milestones
+
 Core Mechanics (Backend): Card shuffle, distribution, API endpoints, real-time events.
 Frontend Development: Game room UI, card animations, trade/auction/prize interfaces.
 Multiplayer Functionality: Room creation, matchmaking, real-time sync.
 Testing & Iteration: Unit tests (backend), usability tests (frontend), load tests.
-Phase 4: Deployment
-Backend Deployment
+
+## Phase 4: Deployment
+
+### Backend Deployment
 
 Use AWS (Elastic Beanstalk or ECS) or Azure App Service.
 Configure DB (AWS RDS), secure connections, environment variables.
-Frontend Deployment
+
+### Frontend Deployment
 
 Host on Vercel, Netlify, or an S3/CloudFront combo.
 Optimize for performance and quick load times.
-Global Accessibility
+
+### Global Accessibility
 
 CDN integration for static assets.
 Monitor latency, ensure minimal real-time delays.
-Phase 5: Post-Launch Enhancements
-Features to Add
+
+## Phase 5: Post-Launch Enhancements
+
+### Features to Add
 
 Custom Game Modes, more advanced trade rules.
 Player Profiles with stats, achievements, leaderboards.
 Chat System for in-game text communication.
 AI Merchant if no human dealer is available.
-Maintenance
+
+### Maintenance
 
 Ongoing bug fixes, performance optimizations.
 Regularly add new features to keep the game fresh.
 
 
-Ultimate Tech Stack
-Frontend
+#  Ultimate Tech Stack
+
+### Frontend
+
 React + TypeScript
 Component-based, efficient, and strongly typed to reduce bugs.
 Redux (or Zustand/Recoil)
@@ -156,7 +177,9 @@ Tailwind CSS
 Utility-first CSS framework for quick, responsive UI layouts.
 Socket.IO Client
 Real-time communication for in-game actions and chat.
-Backend
+
+### Backend
+
 Node.js + Express
 High-performance, lightweight server-side framework in JavaScript/TypeScript.
 Socket.IO
@@ -165,12 +188,16 @@ TypeScript
 Adds reliability and clarity to server code.
 Database ORM: Prisma or Sequelize
 Simplifies queries, migrations, and ensures data consistency.
-Database
-PostgreSQL
+
+### Database
+
+PostgreSQL (Neon)
 Relational database well-suited for transactions and complex queries.
 Redis (Optional)
 In-memory data store for caching sessions, game state snapshots, or user data.
-Hosting & CI/CD
+
+### Hosting & CI/CD
+
 AWS or Azure
 Elastic Beanstalk/ECS (AWS) or App Service (Azure) for the Node.js backend.
 RDS (Postgres) or Azure Database for PostgreSQL.
@@ -181,10 +208,13 @@ GitHub Actions or GitLab CI for automated testing and deployments.
 Step-by-Step Development Process
 Below is a simplified guide on how to build the application incrementally, adopting best practices for each part.
 
-Step 1: Project Setup
+### Step 1: Project Setup
+
 Initialize Repositories
 Create Git repos (separate or monorepo).
-Backend Folder Structure (e.g., mercante-backend/):
+
+### Backend Folder Structure (e.g., mercante-backend/):
+
 arduino
 Copy code
 src/
@@ -205,17 +235,25 @@ src/
   ┣ services/
   ┗ App.tsx
 public/
-Install Dependencies
+
+### Install Dependencies
+
 Backend: express, socket.io, cors, dotenv, typescript, prisma/sequelize, etc.
 Frontend: react, typescript, redux, socket.io-client, tailwindcss, etc.
-Initialize TypeScript
+
+### Initialize TypeScript
+
 Configure tsconfig.json for both frontend and backend.
-Step 2: Database Schema and ORM Setup
+
+### Step 2: Database Schema and ORM Setup
+
 Plan Your Entities
 User, Game, Card, Auction, etc.
 Define Models using Prisma or Sequelize.
 Set Up Migrations to initialize and track schema changes in your Postgres DB.
-Step 3: Basic REST APIs
+
+### Step 3: Basic REST APIs
+
 Authentication
 Endpoints for register/login (use bcrypt for password hashing, JWT for sessions).
 User Management
@@ -224,7 +262,9 @@ Game Management
 Routes to create/join/fetch games.
 Error Handling & Logging
 Consistent error middleware, log management with Winston or pino.
-Step 4: Real-Time with Socket.IO
+
+### Step 4: Real-Time with Socket.IO
+
 Server Setup
 Initialize Socket.IO in index.ts.
 Rooms
@@ -233,7 +273,9 @@ Events
 auctionUpdate, tradeUpdate, cardReveal, etc.
 Server-Side Logic
 Validate token on connection, manage real-time state on the server to prevent cheating.
-Step 5: Frontend Integration
+
+### Step 5: Frontend Integration
+
 Socket Service
 Create a socket.ts to handle the client-side Socket.IO connection.
 State Management
@@ -242,7 +284,9 @@ UI Components
 Auction modals, card layout, scoreboard, real-time notifications.
 Event Handling
 socket.on('auctionUpdate', ...) → dispatch Redux actions.
-Step 6: Game Logic Implementation
+
+### Step 6: Game Logic Implementation
+
 Card Shuffling & Dealing
 Secure randomization on the server side.
 Auctions
@@ -251,14 +295,18 @@ Revealing “Losing” Cards
 Turn-based reveal from the second deck, eliminate matching cards in real-time.
 Prize Distribution
 Calculate pot shares, update user balances.
-Step 7: Testing & QA
+
+### Step 7: Testing & QA
+
 Unit Tests
 Jest + Supertest for backend routes, React Testing Library for frontend.
 Integration & Stress Testing
 Tools like Artillery or k6 to simulate large concurrent sessions.
 User Acceptance
 Gather user feedback, refine UX accordingly.
-Step 8: Deployment
+
+### Step 8: Deployment
+
 Backend
 Deploy via AWS Elastic Beanstalk or Azure App Service.
 Database on AWS RDS or Azure Database for PostgreSQL.
@@ -268,7 +316,9 @@ Environment Variables
 Keep secrets (JWT keys, DB credentials) in secure storage.
 CDN & Caching
 Use a CDN for faster static asset delivery.
-Step 9: Post-Launch Enhancements
+
+### Step 9: Post-Launch Enhancements
+
 Customization: Different rules or card sets, advanced analytics for user stats.
 Player Profiles: Achievements, match history, leaderboards.
 Chat System: In-game text and emotes.
