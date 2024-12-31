@@ -1,0 +1,93 @@
+## Socket.IO Integration (Backend)
+
+- This is critical infrastructure
+- Needed for all real-time game features
+- Should be implemented before complex game logic
+
+## Game State Management (Backend)
+
+- Core game flow tracking
+- Phase transitions
+- Player state management
+- Required for all other game features
+
+## Basic Setup & Game Room (Frontend)
+
+- Project setup with TypeScript/React
+- Socket.IO client configuration
+- Basic room creation/joining
+- Player lobby
+
+## Card Management (Backend)
+
+- Computer merchant reveal system
+- Winner card handling
+- Card elimination logic
+- Foundation for gameplay
+
+## Card Display (Frontend)
+
+- Basic card components
+- Player hand display
+- Card grid layout
+- Essential for game visualization
+
+# MVP Timeline (4-5 weeks)
+
+## Week 1: Core Infrastructure
+🔄 Days 1-3: Socket.IO Setup
+- Set up Socket.IO server/client
+- Basic room management
+- Connection handling
+- Event system foundation
+
+🔄 Days 4-5: Basic Frontend
+- React/TypeScript setup
+- Tailwind configuration
+- Basic routing
+- Room creation/joining UI
+
+## Week 2: Basic Game Flow
+🔄 Days 1-3: Game State Management
+- Game phases
+- Player states
+- Basic turn system
+- Card distribution
+
+🔄 Days 4-5: Game Room UI
+- Lobby interface
+- Player list
+- Game settings
+- Ready/Start system
+
+## Week 3: Core Game Mechanics
+🔄 Days 1-3: Card System
+- Computer merchant logic
+- Card reveal system
+- Winner card handling
+- Basic elimination
+
+🔄 Days 4-5: Card Display
+- Card components
+- Hand display
+- Grid layout
+- Basic animations
+
+## Week 4: MVP Features
+🔄 Days 1-3: Essential Features
+- Simple trading system
+- Basic auction system
+- Win condition checking
+- Prize distribution
+
+🔄 Days 4-5: Polish & Deploy
+- Bug fixes
+- Basic error handling
+- Deployment setup
+- Initial testing
+
+## Optional Week 5: Buffer
+- Additional testing
+- Bug fixes
+- Performance optimization
+- Basic UX improvements

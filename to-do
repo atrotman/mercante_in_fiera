@@ -1,0 +1,166 @@
+# Backend
+
+## Game Initialization & Setup
+✅ Done:
+- Game room creation
+- Player joining
+- Basic card distribution
+
+🔄 Still Needed:
+- Entrance fee collection/validation
+- Prize pool calculation
+- Game start conditions (min players, all fees paid)
+
+## Card Image Management
+🔄 Still Needed:
+- Set up cloud storage (AWS S3 or similar)
+- Image upload endpoint
+- Image URL management in Card model
+- Image validation (size, format)
+- Default card images
+- Image optimization/resizing
+- Image caching strategy
+
+## Card Management
+✅ Done:
+- Card shuffling
+- Initial distribution
+- Auction system structure
+
+🔄 Still Needed:
+- Card reveal system (merchant revealing cards)
+- Winner card management
+- Card elimination tracking
+- Trading system between players
+
+## Auction System
+✅ Done:
+- Basic auction structure
+- Bid placement
+- Random distribution logic
+
+🔄 Still Needed:
+- Timer implementation
+- Bid validation (player funds)
+- Auction completion handling
+- Multiple auction rounds support
+
+## Trading System
+🔄 Still Needed:
+- Trade offer creation
+- Trade acceptance/rejection
+- Trade cancellation
+- Trade validation (card ownership)
+- Trading period management
+
+## Turn Management
+🔄 Still Needed:
+- Turn progression system
+- Card reveal sequence
+- Trading period timing
+- Winner card reveal sequence
+- Game phase transitions
+
+## Sockey.IO Integration
+🔄 Still Needed:
+- Real-time game state updates
+- Player connection management
+- Disconnection handling
+- Game state synchronization
+- Event broadcasting
+
+## Game State Management
+🔄 Still Needed:
+- Game phase tracking
+- Player state tracking
+- Card state management
+- Score/prize tracking
+- Game completion handling
+
+# Frontend
+
+## Project Setup
+🔄 Still Needed:
+- Create React project with TypeScript
+- Set up Tailwind CSS
+- Configure Socket.IO client
+- Set up state management (Redux/Zustand)
+- Configure routing
+- Set up development environment
+
+## Game Room Components
+🔄 Still Needed:
+- Game creation form
+- Room joining interface
+- Game lobby
+- Player list display
+- Game settings configuration
+- Ready/Start game controls
+
+## Card Display Components
+🔄 Still Needed:
+- Card component (front/back views)
+- Player hand display
+- Card grid layout
+- Card animation system
+- Winner card display
+- Card reveal animations
+
+## Auction Interface
+🔄 Still Needed:
+- Auction display panel
+- Bidding controls
+- Timer display
+- Current bid status
+- Auction history
+- Bid confirmation modal
+
+## Trading Interface
+🔄 Still Needed:
+- Trade offer creation
+- Trade request display
+- Card selection interface
+- Trade confirmation/rejection
+- Trade history display
+
+## Game Flow UI
+🔄 Still Needed:
+- Turn indicator
+- Phase transitions
+- Game status display
+- Winner announcement
+- Prize distribution display
+- Game over screen
+
+## Real-time Updates
+🔄 Still Needed:
+- Socket event handlers
+- Game state synchronization
+- Player status updates
+- Error handling
+- Reconnection logic
+
+## Responsive Design
+🔄 Still Needed:
+- Mobile-friendly layout
+- Tablet optimization
+- Desktop layout
+- Touch controls
+- Responsive animations
+
+## User Experience
+🔄 Still Needed:
+- Loading states
+- Error messages
+- Toast notifications
+- Help/Tutorial system
+- Sound effects
+- Visual feedback
+
+## Testing
+🔄 Still Needed:
+- Unit tests
+- Integration tests
+- E2E testing
+- Performance testing
+- Cross-browser testing
