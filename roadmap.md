@@ -14,13 +14,13 @@ One person acts as the Merchant (dealer). Other participants buy, trade, and hol
 
 The are two decks with 40 different cards, the cards of the two decks are identical but the back of the two decks are different colours
 
-After both decks are shuffled by the dealer (called the "merchant"), three to seven cards (user choice) from one of the decks are placed faced down on the table. These cards represent the "winning cards" from first prize, second price, etc. The rest of this deck is placed aside in a pile beside the winner cards. Set the default as 5 winner cards
+After both decks are shuffled by the dealer (called the "merchant"), three to seven cards (user choice) from one of the decks are placed faced down on the table. These cards represent the "winning cards" from first prize, second price, etc. The rest of this deck is placed aside in a pile beside the winner cards. Default as 5 winner cards.
 
 To participate in the game, each player must play an entrance fee (determined by the users)
 
-Once every player pays their fee, a% of the total pot is placed on the back of the first place card, b% on the back of the second place, c% on the back of the first place card, etc. until a percent is set for all the winner cards. Set the default as 35% for first place, 25% for second, 20% for third, 10% for fouth, and 10% for fifth.
+Once every player pays their fee, a% of the total pot is placed on the back of the first place card, b% on the back of the second place, c% on the back of the first place card, etc. until a percent is set for all the winner cards. Default as 35% for first place, 25% for second, 20% for third, 10% for fouth, and 10% for fifth.
 
-Afterwrds, the merchant distributed the second deck of cards evenly across the players. If it cannot be distributed evenly, the remaining cards are auctioned by the merchant to the players and the money is then distributed onto the winning cards in the same percentage. If no player wants buy the extra cards, they become the merchants cards.
+Afterwrds, the merchant distributed the second deck of cards evenly across the players. If it cannot be distributed evenly, the remaining cards are auctioned by the merchant to the players and the money is then distributed onto the winning cards in the same percentage. If no player wants buy the extra cards, they are assogmed randomly to the players.
 
 Once every player has their cards, they turn them all face up in front of them.
 
