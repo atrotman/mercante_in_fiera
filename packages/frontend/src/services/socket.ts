@@ -4,20 +4,32 @@ import { ServerToClientEvents, ClientToServerEvents } from '../../../backend/src
 export class SocketService {
   private socket: Socket<ServerToClientEvents, ClientToServerEvents>
   private eventHandlers: Map<string, Function[]> = new Map()
+  private sessionId: string | null = null
+  private reconnectAttempts = 0
+  private maxReconnectAttempts = 5
 
   constructor() {
+    // Load existing session if any
+    this.sessionId = localStorage.getItem('gameSessionId')
+
     this.socket = io(process.env.REACT_APP_BACKEND_URL || 'http://localhost:3000', {
       autoConnect: false,
       reconnection: true,
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000
+      reconnectionAttempts: this.maxReconnectAttempts,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      timeout: 10000
     })
 
     this.setupListeners()
   }
 
   connect(gameId: string, nickname: string) {
-    this.socket.auth = { gameId, nickname }
+    this.socket.auth = { 
+      gameId, 
+      nickname,
+      sessionId: this.sessionId 
+    }
     this.socket.connect()
   }
 
@@ -29,12 +41,29 @@ export class SocketService {
     // Connection events
     this.socket.on('connect', () => {
       console.log('Connected to game server')
+      this.reconnectAttempts = 0
       this.emit('connectionStatus', { connected: true })
     })
 
-    this.socket.on('disconnect', () => {
-      console.log('Disconnected from game server')
+    this.socket.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+      this.handleReconnectError()
+    })
+
+    this.socket.on('disconnect', (reason) => {
+      console.log('Disconnected:', reason)
       this.emit('connectionStatus', { connected: false })
+      
+      if (reason === 'io server disconnect') {
+        // Server initiated disconnect, attempt reconnect
+        setTimeout(() => this.socket.connect(), 1000)
+      }
+    })
+
+    // Store session ID on first connection
+    this.socket.on('session', ({ sessionId }) => {
+      this.sessionId = sessionId
+      localStorage.setItem('gameSessionId', sessionId)
     })
 
     // Game events
@@ -118,6 +147,16 @@ export class SocketService {
       console.error('Socket error:', data.message)
       this.emit('error', data)
     })
+  }
+
+  private handleReconnectError() {
+    this.reconnectAttempts++
+    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+      this.emit('error', { 
+        message: 'Unable to connect to game server after multiple attempts' 
+      })
+      this.socket.disconnect()
+    }
   }
 
   // Event emitters
