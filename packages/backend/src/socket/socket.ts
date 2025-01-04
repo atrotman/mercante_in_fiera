@@ -81,7 +81,6 @@ export function initializeSocket(httpServer: HttpServer) {
     socket.on('startGame', async () => {
       try {
         const game = await merchantService.setupGame(socket.data.gameId)
-        await gameStateManager.saveGameState(socket.data.gameId)
         io.to(socket.data.gameId).emit('gameStarted', { game })
       } catch (error) {
         socket.emit('error', { message: 'Failed to start game' })
@@ -95,7 +94,6 @@ export function initializeSocket(httpServer: HttpServer) {
           socket.id,
           data.amount
         )
-        await gameStateManager.saveGameState(socket.data.gameId)
         io.to(socket.data.gameId).emit('bidPlaced', {
           nickname: socket.data.nickname,
           amount: data.amount
@@ -175,6 +173,17 @@ export function initializeSocket(httpServer: HttpServer) {
         permanent: false
       })
     })
+
+    socket.on('requestStateRecovery', async () => {
+      try {
+        const gameState = await gameStateManager.recoverGameState(socket.data.gameId)
+        if (gameState) {
+          socket.emit('gameStateUpdated', { game: gameState.game })
+        }
+      } catch (error) {
+        socket.emit('error', { message: 'Failed to recover game state' })
+      }
+    })
   })
 
   return io
@@ -185,34 +194,39 @@ async function handleReconnection(socket: any) {
     // Try to recover game state
     const gameState = await gameStateManager.recoverGameState(socket.data.gameId)
     
-    // Validate state
-    const isValid = await gameStateManager.validateGameState(socket.data.gameId)
-    if (!isValid) {
-      await gameStateManager.handleStateError(socket.data.gameId)
-      socket.emit('error', { 
-        message: 'Game state was corrupted and has been reset' 
-      })
+    if (!gameState) {
+      socket.emit('error', { message: 'Game state not found' })
       return
     }
 
-    // Send full state to reconnected player
-    socket.emit('gameStateUpdated', { game: gameState.game })
+    // Validate game state
+    const isValid = await gameStateManager.validateGameState(socket.data.gameId)
+    if (!isValid) {
+      // Try to rollback to last valid state
+      const previousState = await gameStateManager.rollbackToLastState(socket.data.gameId)
+      if (previousState) {
+        socket.emit('gameStateUpdated', { game: previousState.game })
+        socket.emit('warning', { 
+          message: 'Game state was corrupted. Rolled back to last valid state.' 
+        })
+      } else {
+        socket.emit('error', { 
+          message: 'Game state is invalid and could not be recovered' 
+        })
+        return
+      }
+    } else {
+      // Send current state to reconnected player
+      socket.emit('gameStateUpdated', { game: gameState.game })
+    }
 
-    // Restore specific state based on game phase
-    if (gameState.auctionState?.currentCard) {
+    // If in auction, restore auction state
+    if (gameState.auctionState?.status === 'active') {
       socket.emit('auctionStarted', {
         card: gameState.auctionState.currentCard,
         timeRemaining: gameState.auctionState.timeRemaining
       })
     }
-
-    // Send revealed cards
-    gameState.revealedCards.forEach(card => {
-      socket.emit('cardRevealed', { 
-        card,
-        isWinnerCard: false
-      })
-    })
 
     // Notify others of reconnection
     socket.to(socket.data.gameId).emit('playerReconnected', {
